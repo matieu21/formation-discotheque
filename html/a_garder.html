@@ -1,0 +1,863 @@
+<script type="text/babel">
+
+    class InputForm extends React.Component {
+        constructor(props) {
+            super(props)
+            this.state = {
+                id_artist: "",
+                id_artists: [],
+                message: ""
+            }
+
+            this.handleChange = this.handleChange.bind(this)
+            this.handleSubmit = this.handleSubmit.bind(this)
+        } /// constructor
+
+        // COMPONENTDIDMOUNT
+        // componentDidMount() est appelée immédiatement après que le composant est monté
+        // (inséré dans l'arbre).
+        // C'est ici que vous devriez placer les initialisations ...
+        componentDidMount() {
+            // URL sur le serveur
+            // Problème de CROSS-ORIGIN avec PHP si les 2 scripts ne sont pas sur le même serveur
+            // POUR LE REMPLISSAGE DE LA LISTE
+            fetch("http://localhost:8082/artistSelectViaProcStockSQLGET")
+                .then(response => {
+                    console.log("RESPONSE")
+                    console.log(response)
+                    return response.json()
+                })
+                .then(result => {
+                    console.log("RESULT");
+                    // Tableau ordinal d’objets JSON
+                    console.log(result)
+                    this.setState({ id_artists: result })
+                },
+                    error => {
+                        console.log("ERROR")
+                        console.log(error)
+                    }
+                )
+        } /// componentDidMount
+
+        // CLIC DANS LA LISTE
+        handleChange(event) {
+            console.log(this)
+            this.setState({
+                id_artist: event.target.value
+            })
+            //console.log("State " + name + " : " + this.state.cp)
+        } /// handleChange
+
+
+        handleSubmit(event) {
+            event.preventDefault()
+            let URL = "http://localhost:8082/artistDeleteViaProcStockSQLGET?"
+            URL += "id_artist=" + this.state.id_artist
+            fetch(URL)
+                .then(response => {
+                    console.log("RESPONSE")
+                    console.log(response)
+                    return response.json()
+                })
+                .then((result) => {
+                    let resultText = ""
+                    console.log("RESULT")
+                    // Tableau ordinal contenant 0 ou 1 objet JSON
+                    console.log(result)
+                    if (result) {
+                        resultText = "Suppression réussie !"
+                    } else {
+                        resultText = "Introuvable !"
+                    }
+                    console.log("resultText")
+                    console.log(resultText)
+                    this.setState({ message: resultText })
+                },
+                    (error) => {
+                        // Erreur HTTP
+                        console.log(error)
+                    }
+                )
+        } /// handleSubmit en mode GET
+
+        render() {
+            return (
+                <div>
+                    <form onSubmit={this.handleSubmit}>
+                        <p>
+                            <label className="etiquette">
+                                artist name : &nbsp;
+                            </label>
+                            <select name="id_artist" id="id_artist" onChange={this.handleChange}>
+                                {
+                                    this.state.id_artists.map((item, index) => {
+                                        return <option key={index} value={item.id_artist}>{"Artist:   "}{item.name_artist}</option>
+                                    })
+                                }
+                            </select>
+                        </p>
+                        <p>
+                            <input type="submit" value="Selectionner" />
+                        </p>
+                        <p>
+                            <input type="submit" value="Supprimer" />
+                        </p>
+                    </form>
+                    <p>
+                        {this.state.message}
+                    </p>
+                </div>
+            )
+        } /// render
+
+    } /// CLASS
+
+    // MAIN
+    ReactDOM.render(<InputForm />, document.getElementById("app"))
+
+</script>
+
+
+
+// http://localhost:8082/artistInsertViaProcStockSQLGET?name_artist=Radiohead&years_start_artist=1992&years_end_artist=NULL&psite_web_artist=www.radiohead.com&photo_artist=https://images.radio-canada.ca/q_auto,w_960/v1/ici-info/16x9/radiohead-coffret-anniversaire-kid-a-amnesiac.jpg
+
+// Vers du MySQL (Insert)
+app.get('/artistInsertViaProcStockSQLGET', (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+
+  // Crée un objet de type Connection
+  const connexion = mysql.createConnection({
+    host: 'localhost',
+    port: '3306',
+    user: 'web',
+    password: '123',
+    database: 'discotheque'
+  })
+
+  // Connexion à la BD
+  connexion.connect()
+  const params = [req.query.name_artist, req.query.years_activity_artist, req.query.site_web_artist, req.query.photo_artist];
+  // Exécute une requête SQL de type INSERT
+  connexion.query('CALL artistInsert(?,?,?,?)', params, (err, affected) => {
+    // SI OK
+    if (!err) {
+      res.status(200).json(affected.affectedRows)
+    }
+    else {
+      res.status(200).json("Erreur d'exécution de la requête !" + err)
+    }
+  })
+
+  // Déconnexion de la BD
+  connexion.end() /// Déconnexion
+}) /// app.get('/villeInsertViaProcStockSQLGET'
+
+
+
+////////////////////input Albu//////////////////////////
+
+
+        var resultText = ""
+
+        class InputForm_2 extends React.Component {
+            constructor(props) {
+                super(props)
+                this.state = {
+                    name_album: this.props.name_album,
+                    photo_album: this.props.photo_album,
+                    number_tracks_album: this.props.number_tracks_album,
+                    duration_album: this.props.duration_album,
+                    similar_album: this.props.similar_album,
+                    year_release_album: this.props.year_release_album,
+                    id_artist: this.props.id_artist, 
+                    artists: [],
+                    message: ""
+                }
+
+                this.handleChangeTextInput_2 = this.handleChangeTextInput_2.bind(this)
+
+                this.handleSubmit_2 = this.handleSubmit_2.bind(this)
+                this.handleSubmit_artist = this.handleSubmit_artist.bind(this)
+            } /// constructor
+
+            componentDidMount() {
+                // URL sur le serveur
+                // Problème de CROSS-ORIGIN avec PHP si les 2 scripts ne sont pas sur le même serveur
+                fetch("http://localhost:8082/showArtists")
+                    .then(response => {
+                        console.log("RESPONSE")
+                        console.log(response)
+                        return response.json()
+                    })
+                    .then(result => {
+                        console.log("RESULT");
+                        // Tableau ordinal d’objets JSON
+                        console.log(result)
+                        this.setState({ artists: result })
+                    },
+                        error => {
+                            console.log("ERROR")
+                            console.log(error)
+                        }
+                    )
+            } /// componentDidMount
+            /*
+            CHANGE
+            */
+            handleChangeTextInput_2(event) {
+                console.clear()
+                const name = event.target.name
+                const value = event.target.value
+                console.log("name : " + name)
+                console.log("value : " + value)
+                this.setState({
+                    [name]: value /// Pour faire du générique
+                    //cp: value
+                })
+                console.log("State " + "name_album" + " : " + this.state.name_album)
+                console.log("State " + "photo_album" + " : " + this.state.photo_album)
+                console.log("State " + "number_tracks_album" + " : " + this.state.number_tracks_album)
+                console.log("State " + "duration_album" + " : " + this.state.duration_album)
+                console.log("State " + "similar_album" + " : " + this.state.similar_album)
+                console.log("State " + "year_release_album" + " : " + this.state.year_release_album)
+                console.log("State " + "id_artist" + " : " + this.state.id_artist)
+            } /// handleChangeTextInput2
+
+
+
+            /*
+            SUBMIT EN MODE GET
+            */
+            handleSubmit_2(event) {
+                event.preventDefault()
+                let URL = "http://localhost:8082/albumInsertViaProcStockSQLGET?"
+                URL += "name_album=" + this.state.name_album
+                URL += "&photo_album=" + this.state.photo_album
+                URL += "&number_tracks_album=" + this.state.number_tracks_album
+                URL += "&duration_album=" + this.state.duration_album
+                URL += "&similar_album=" + this.state.similar_album
+                URL += "&year_release_album=" + this.state.year_release_album
+                URL += "&id_artist=" +this.state.id_artist
+                console.log(URL)
+                fetch(URL)
+                    .then(response => {
+                        console.log("RESPONSE")
+                        console.log(response)
+                        return response.json()
+                    })
+                    .then((result) => {
+                        console.log("RESULT")
+                        // Tableau ordinal contenant 0 ou 1 objet JSON
+                        console.log(result)
+                        if (result.affectedRows == 1) {
+                            resultText = "Insertion réussie !"
+
+                        } else {
+                            resultText = "Insertion ratée !"
+                            resultText = result[0]
+                        }
+                        console.log("resultText")
+                        console.log(resultText)
+                        this.setState({ message: resultText })
+                    },
+                        (error) => {
+                            // Erreur HTTP
+                            console.log(error)
+                        }
+                    )
+            } /// handleSubmit
+
+
+            
+                
+                handleSubmit_artist(event) {
+                event.preventDefault()
+                let URL2 = "http://localhost:8082/albumInsertViaProcStockSQLGET?"
+                URL2 += "id_artist=" + this.state.id_artist
+                fetch(URL2)
+                    .then(response => {
+                        console.log("RESPONSE")
+                        console.log(response)
+                        return response.json()
+                    })
+                    .then((result) => {
+                        let resultText = ""
+                        console.log("RESULT")
+                        console.log(result)
+                        this.setState({ message: result })
+                    },
+                        (error) => {
+                            // Erreur HTTP
+                            console.log(error)
+                        }
+                    )
+            } /// handleSubmit en mode GET
+
+
+            
+            render() {
+                return (
+
+                    <div id="centre" classname="article">
+                        <legend className="legend">Nouvel album</legend>
+                        <form onSubmit={this.handleSubmit_2} method="GET">
+
+                            <div className="form-group row">
+                                <label for="nom" className="etiquette col-sm-2 col-form-label col-form-label-sm">Nom: </label>
+
+                                <div className="col-sm-10">
+                                    <input type="text" name="name_album" className="form-control w-50" id="nom" value={this.state.name_album} onChange={this.handleChangeTextInput_2} placeholder="Nom de l'album *"
+                                        required />
+                                </div>
+
+                            </div>
+
+
+
+
+                            <div className="form-group row">
+                                <label for="nom" className="etiquette col-sm-2 col-form-label col-form-label-sm">Photo de l'album: </label>
+                                <div className="col-sm-10">
+                                    <input type="text" name="photo_album" id="prenom" required value={this.state.photo_album} onChange={this.handleChangeTextInput_2} className="form-control w-50"
+                                    />
+
+                                </div>
+
+                            </div>
+
+
+
+
+
+                            <div className="form-group row">
+                                <label for="pseudo" className="etiquette col-sm-2 col-form-label col-form-label-sm">Nombre de chansons: </label>
+                                <div className="col-sm-10">
+                                    <input type="text" name="number_tracks_album" id="pseudo" value={this.state.number_tracks_album} onChange={this.handleChangeTextInput_2} className="form-control w-50"
+                                        placeholder="site web " />
+                                </div>
+
+                            </div>
+
+
+                            <div className="form-group row">
+                                <label for="mdp" className="etiquette col-sm-2 col-form-label col-form-label-sm">Durée de l'album: </label>
+                                <div className="col-sm-10">
+                                    <input type="text" name="duration_album" id="mdp" value={this.state.duration_album} onChange={this.handleChangeTextInput_2} className="form-control w-50"
+                                    />
+
+                                </div>
+
+                            </div>
+                            <div className="form-group row">
+                                <label for="mdp" className="etiquette col-sm-2 col-form-label col-form-label-sm">Similar allbum: </label>
+                                <div className="col-sm-10">
+                                    <input type="text" name="similar_album" id="mdp" value={this.state.similar_album} onChange={this.handleChangeTextInput_2} className="form-control w-50"
+                                    />
+
+                                </div>
+
+                            </div>
+                            <div className="form-group row">
+                                <label for="mdp" className="etiquette col-sm-2 col-form-label col-form-label-sm">Année de sortie: </label>
+                                <div className="col-sm-10">
+                                    <input type="text" name="year_release_album" id="mdp" value={this.state.year_release_album} onChange={this.handleChangeTextInput_2} className="form-control w-50"
+                                    />
+
+                                </div>
+
+                            </div>
+
+                            <div>
+                                <div onSubmit={this.handleSubmit_artist} method="GET">
+                                    <p>
+                                        <label className="etiquette">
+                                            Artists : &nbsp;
+                                        </label>
+                                        <select name="id_artist" id="id" onChange={this.handleChangeTextInput_2}>
+                                            {
+                                                this.state.artists.map((item, index) => {
+                                                    return <option key={index} value={item.id_artist}>{item.name_artist}</option>
+                                                })
+                                            }
+                                        </select>
+                                    </p>
+
+                                </div>
+                                <p>
+                                    {this.state.message}
+                                </p>
+                            </div>
+
+
+                            <p>
+                                <input id="btValider" type="submit" value="Envoyer" />
+                            </p>
+
+
+
+
+
+
+                        </form>
+
+                        <br /><br />
+
+
+
+                    </div>
+                )
+            } /// render
+
+        } /// CLASS
+
+        // MAIN
+
+        ReactDOM.render(<InputForm_2 />, document.getElementById("app_2"))
+        //////////////Fin input album///////////////////////////
+
+
+
+
+
+        <!---Affichage des albums, artistes et details
+        
+        // l'URL de base de l'API IT Books
+        const URL = " http://localhost:8082/showArtistSQL";
+        const URL2= " http://localhost:8082/showAlbumsByArtist";
+        // Le numéro de page en cours
+        
+
+        //let numberOfAlbums;
+
+        //const shownNumberOfPages = 10;
+
+        //let pageSegmentNumber = 1;
+
+        // La recherche saisie par l'utilisateur
+        let searchString = "";
+
+        // Fonction pour la récupération des données de la recherche
+        async function searchFromAPI() {
+            //console.log(search);
+            // Envoi d'un requêt http à l'API 
+            // pour obtenir une réponse
+            // http://localhost:8082/showArtistSQL?name_artist=U2
+            const response = await fetch(URL + "?name_artist=" + searchString );
+
+            console.log(URL2+ "?name_artist=" + searchString );
+
+            // test de la réponse du serveur
+            console.log(response);
+
+            //todo : gérer le message d'erreur quand response.ok = false
+            //tofix : message qui indique que l'on doit réparer
+
+            // extraction des données json depuis la réponse
+            const data = await response.json();
+
+            // test de l'extraction
+            console.log(data);
+
+            // Affichage de la liste des albums
+            showArtistList(data[0].name_artist);
+
+            //numberOfBooks = data.total;
+
+            // Affichage de la pagination
+           // showPagination(numberOfAlbums);
+        }
+/*
+        // Affichage de la pagination
+        function showPagination(numberOfBooks) {
+            const numberOfPages = Math.ceil(numberOfBooks / 10);
+            const resultString = ` ${numberOfBooks} résultats page ${currentPage} sur ${numberOfPages}`;
+
+            console.log(resultString);
+
+            // Insertion de resultString dans le DOM
+            $("#searchResult").text(resultString);
+
+            // génération des liens vers les pages
+            let html = `<li class="page-item">
+                        <a href="#" class="page-link" id="prevPageSegment">Précédent</a>
+                    </li>`;
+            const start = ((pageSegmentNumber -1) * shownNumberOfPages) + 1;
+            const end = Math.min(pageSegmentNumber * shownNumberOfPages, numberOfPages);
+            for (let page = start; page <= end; page++) {
+                let activeClass = "";
+                if (currentPage == page) {
+                    activeClass = "active"
+                }
+                html += `<li class="page-item ${activeClass}">
+                        <a href="#" class="page-link page-number">${page}</a>
+                    </li>`
+            }
+            
+            html += `<li class="page-item">
+                        <a href="#" class="page-link" id="nextPageSegment">Suivant</a>
+                    </li>`
+
+            // Insertion des pages dans le DOM
+            $(".pagination").html(html);
+        }*/
+        // Fonction chargée de l'affichage de la liste des albums
+        function showArtistList() {
+            let html = "";
+            const data = await response.json();
+            // Boucle sur les albums du meme artiste
+            if (data[0].name_artist == searchString) {
+                // création d'un élément de liste 
+                html += `<li class="list-group-item d-flex justify-content-between">
+                    ${name_album}
+                    <button class="btn btn-primary" id_artist="${id_artist}">détails</button>
+                </li>`;
+            }
+            // test de la creation de la liste
+            console.log(html);
+
+            // Insertion du code html dans le DOM
+            $("#listOfAlbums").html(html);
+        }
+
+        // Appel à l'API pour récupérer les détails
+        // d'un livre dont l'ibn est passé en argument
+        async function getAlbumsDetailsFromAPI(id_artist){
+            // récupération d'une réponse http:localhost:8082/showAlbumsByArtist
+            const response2 = await fetch(URL2 + "?id_artist=" + id_artist);
+            //todo gérer les erreurs http
+
+            console.log(response2);
+
+            // transformation de la réponse en json
+            const data = await response2.json();
+
+            console.log(data);
+
+            // Affichage du détails dans le navigateur
+            showAlbumsDetails(data);
+        }
+
+        function showAlbumsDetails(book){
+            $("#albumTitle").text(book.title);
+            
+            $("#albumInfos").text(`${book.year}, ISBN ${book.isbn13}, ${book.pages} pages, ${book.publisher}`);
+            $("#bookAuthors").text(book.authors);
+            
+            
+
+            
+        }
+
+        $(document).ready(function () {
+            // ciblage du formulaire
+            const searchForm = $("#form");
+
+            // ciblage du détails d'un livre
+            const albumDetails = $("#details");
+
+            // on masque le détails du livre au chargement
+            albumDetails.hide();
+
+            // réaction à l'envoi du formulaire
+            searchForm.submit(function (event) {
+                // empêcher le recharegement de la page
+                event.preventDefault();
+
+                // Récupération des données
+                searchString = $("#searchInput").val();
+
+                // Réinitialisation du numéro de page en cours
+                currentPage = 1;
+                pageSegmentNumber = 1;
+
+                // masquer le détails
+                $("#details").hide();
+
+                // premier test 
+                //console.log(searchString);
+
+                // Envoi de la requête au serveur 
+                // pour récupération des données de la recherche
+                searchFromAPI();
+            });
+
+            // réaction au clic sur un numéro de page
+            $(".pagination").delegate(".page-number", "click", function () {
+                // on enlève la classe "active" de tous les li de la liste
+                $(".pagination .page-item").removeClass("active");
+                // on ajoute la classe "active" sur le li 
+                // parent du lien sur lequel on a cliqué
+                $(this).parent().addClass("active");
+                // On récupère le numéro de la page cliquée
+                // pour changer la valeur de currentPage
+                currentPage = $(this).text();
+
+                console.log(currentPage);
+
+                // Au changement de page on masque le détails du livre
+                $("#details").hide();
+
+                // Requête pour récupérer les résultats 
+                // qui correspondent à la page
+                searchFromAPI();
+            });
+
+            $(".pagination").delegate("#nextPageSegment", "click", function(){
+                const numberOfPages = Math.ceil(numberOfAlbums/10);
+                const maxSegment = Math.ceil(numberOfPages / shownNumberOfPages);
+                if( pageSegmentNumber < maxSegment){
+                    pageSegmentNumber++;
+                    showPagination(numberOfAlbums);
+                } 
+            });
+
+            $(".pagination").delegate("#prevPageSegment", "click", function(){
+                if(pageSegmentNumber > 1){
+                    pageSegmentNumber--;
+                    showPagination(numberOfAlbums);
+                }
+            });
+
+            $("#listOfAlbums").delegate("button", "click", function(){
+                // On récupère l'isbn
+                const id_artist = $(this).data("id_artist");
+
+                console.log(id_artist);
+
+                // Récupération des infos du livre 
+                // depuis l'API
+                getAlbumsDetailsFromAPI(id_artist);
+            });
+
+
+        });
+  
+        
+        
+        -->
+
+        <!--
+
+class InputForm extends React.Component {
+        constructor(props) {
+            super(props)
+            this.state = {
+                id_artist: "",
+                id_artists: [],
+
+                message: ""
+            }
+
+            this.handleChange = this.handleChange.bind(this)
+
+        } /// constructor
+
+        // COMPONENTDIDMOUNT
+        // componentDidMount() est appelée immédiatement après que le composant est monté
+        // (inséré dans l'arbre).
+        // C'est ici que vous devriez placer les initialisations ...
+        componentDidMount() {
+            // URL sur le serveur
+            // Problème de CROSS-ORIGIN avec PHP si les 2 scripts ne sont pas sur le même serveur
+            // POUR LE REMPLISSAGE DE LA LISTE
+            fetch("http://localhost:8082/showArtists")
+                .then(response => {
+                    console.log("RESPONSE")
+                    console.log(response)
+                    return response.json()
+                })
+                .then(result => {
+                    console.log("RESULT");
+                    // Tableau ordinal d’objets JSON
+                    console.log(result)
+                    this.setState({ id_artists: result })
+                },
+                    error => {
+                        console.log("ERROR")
+                        console.log(error)
+                    }
+                )
+        } /// componentDidMount
+
+        // CLIC DANS LA LISTE
+        handleChange(event) {
+            console.log(this)
+            this.setState({
+                id_artist: event.target.value
+            })
+            //console.log("State " + name + " : " + this.state.cp)
+        } /// handleChange
+
+
+
+
+        render() {
+            return (
+                <div>
+                    <form>
+                        <p>
+                            <label className="etiquette">
+                                Artist Name : &nbsp;
+                            </label>
+                            <select name="id_artist" id="id_artist" onChange={this.handleChange}>
+                                {
+                                    this.state.id_artists.map((item, index) => {
+                                        return <option key={index} value={item.id_artist}>{item.name_artist}</option>
+                                    })
+                                }
+                            </select>
+                        </p>
+
+
+
+
+
+
+                    </form>
+
+
+                </div>
+            )
+        } /// render
+
+    } /// CLASS
+
+    // MAIN
+    ReactDOM.render(<InputForm />, document.getElementById("app"))
+
+
+
+
+    class InputForm2 extends React.Component {
+        constructor(props) {
+            super(props)
+            this.state = {
+                id_album: "",
+                id_albums: [],
+
+                message: ""
+            }
+
+            this.handleSubmit = this.handleSubmit.bind(this)
+
+            this.handleChange = this.handleChange.bind(this)
+        } /// constructor
+
+
+        handleSubmit() {
+
+            let URL = "http://localhost:8082/showAlbumDetail?"
+            URL += "id_artist=" + this.state.id_artist
+            fetch(URL)
+                .then(response => {
+                    console.log("RESPONSE")
+                    console.log(response)
+                    return response.json()
+                })
+                .then((result) => {
+                    let resultText = ""
+                    console.log("RESULT")
+                    // Tableau ordinal contenant 0 ou 1 objet JSON
+                    console.log(result)
+                    if (result) {
+                        resultText = "Suppression réussie !"
+                    } else {
+                        resultText = "Introuvable !"
+                    }
+                    console.log("resultText")
+                    console.log(resultText)
+                    this.setState({ message: resultText })
+                },
+                    (error) => {
+                        // Erreur HTTP
+                        console.log(error)
+                    }
+                )
+        } /// handleSubmit en mode GET
+        // CLIC DANS LA LISTE
+        handleChange(event) {
+            console.log(this)
+            this.setState({
+                id_artist: event.target.value
+            })
+            //console.log("State " + name + " : " + this.state.cp)
+        } /// handleChange
+
+
+
+
+        render() {
+            return (
+                <div>
+                    <form onSubmit={this.handleSubmit}>
+                        <div name="id_artist" id="id_album">
+                            {
+                                this.state.id_albums.map((item, index) => {
+                                    return
+                                    <p key={index} value={item.id_artist}>
+                                        {item.name_album}
+                                    </p>
+                                })
+                            }
+                        </div>
+
+
+
+
+
+
+
+                        <p>
+                            <input type="submit" value="Afficher les albums" />
+                        </p>
+                    </form>
+                </div>
+            )
+        }
+    }
+    ReactDOM.render(<InputForm2 />, document.getElementById("app2"))
+
+
+
+        -->
+
+
+        async function getOneBook(searchInput = "") {
+            //Call API
+        
+            if (searchInput != "") {
+                URL += "?" + searchInput
+                console.log(URL)
+            }
+        
+            const response = await fetch(URL)
+            //Manage errors
+            if (!response.ok) {
+                throw "Erreur du serveur";
+            }
+            const data = await response.json();
+        
+            //Store book list to display the details later   
+            bookListArray = data
+        
+            for (index in bookListArray){
+        
+                let booksindex = bookListArray[index].name_artist
+        
+                bookListArrayIsbn.push(booksindex)
+        
+                console.log(booksindex)
+        
+                //console.log(book)
+        
+            }
+        
+        
+            console.log(bookListArray)
+        
+            showBookSearch(data[0])
+            console.log(showBookSearch)
+        
+        }

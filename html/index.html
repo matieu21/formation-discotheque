@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>index</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../css/style.css" id="theme">
+    <script src="../js/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <header id='header'>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="index.html">Home</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="insert.html">New/Insert <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="wantlist.html">Wantlist</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="disco.html">My Library<span class="sr-only">(current)</span></a>
+                    </li>
+
+                    
+                    
+
+
+                </ul>
+                <form class="form-inline my-2 my-lg-0" id='itemSearch'>
+                    <input class="form-control mr-sm-2" type="search" placeholder="Artist, song..." aria-label="Search" name="name_track">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+                <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </nav>
+    </header>
+    <main>
+       <!-- <h1 id="collection">Classez, organisez, collectionnez</h1>
+        <div class="img article">
+            <img id="photo" src="" alt="Image" width="500"  />
+        </div>
+    </main>
+
+    <table id=tracksTable>
+        <tbody id=trackSearchOutput>
+
+        </tbody>
+    </table>
+    <div id="showSearch"></div>
+   -->
+
+
+   <section id="centre" >
+    <article class="article row">
+        <!--                <h1>Authentification</h1>-->
+
+        <fieldset class="col-md-4 ml-auto mr-auto">
+            <legend class="legend">Authentification</legend>
+            <form action="" method="POST">
+
+                <div class="">
+                    <label for="pseudo" class="etiquette col-sm-2 col-form-label col-form-label-sm">Pseudo: </label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control " name="pseudo" id="pseudo" value=""
+                            placeholder="Pseudo ou email *" />
+                    </div>
+                    <label id="lblMessagePseudo" class="texteOrange">
+
+                    </label>
+                </div>
+                <div class="">
+                    <label for="mdp" class="etiquette">Mot de passe:
+                    </label>
+                    <div class="col-sm-10">
+                        <input type="password" class="form-control" name="mdp" id="mdp" value=""
+                            required="required" placeholder="Votre mot de passe *" />
+                    </div>
+
+                    <label id="lblMessageMDP" class="texteOrange">
+
+                    </label>
+
+                </div>
+                <br>
+                <div>
+                    <label for="chkMdpVisible">Mot de passe visible</label>
+                    <input type="checkbox" name="chkMdpVisible" id="chkMdpVisible" />
+                </div>
+
+                <div>
+                    <label for="chkSeSouvenir">Se souvenir de moi</label>
+                    <input type="checkbox" name="chkSeSouvenir" id="chkSeSouvenir" />
+                </div>
+
+                <div>
+                    <a href="#" id="motDePasseOublie">Mot de passe oublié?</a>
+                </div>
+
+                <div id="pButtons">
+                    <button type="reset" class="btn btn-secondary" name='btReinitialiser' id='btReinitialiser' value="R&eacute;initialiser">
+                        Réinitialiser
+                    </button>
+                    <button type="button" class="btn btn-secondary" name='btValider' id='btValider'>
+                        Valider
+                    </button>
+                </div>
+            </form>
+            <p>
+                Pas Encore inscrit? Cliquez <a href="inscription.html">ici</a>
+            </p>
+        </fieldset>
+        <p>
+            <label id="lblMessage" class="texteOrange">
+               
+            </label>
+        </p>
+
+
+        
+    </article>
+</section>
+
+
+
+
+    <script src="../js/authentification.js"></script>   
+</body>
+
+
+</html>

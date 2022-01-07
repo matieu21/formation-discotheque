@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>index</title>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <script src="../libs/react.development.js"></script>
+    <script src="../libs/react-dom.development.js"></script>
+    <script src="../libs/babel.min.js"></script>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script src="../js/disco.js"></script>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="../css/style.css" id="theme">
+</head>
+
+<body id="body_accueil">
+    <header id='header'>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="index.html">Home</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="insert.html">New/Insert <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="wantlist.html">Wantlist</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="disco.html">My Library<span class="sr-only">(current)</span></a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="inscription.html"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                            </svg><span>&nbsp</span>Sign Up</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="authentification.html"><svg xmlns="http://www.w3.org/2000/svg"
+                                width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right"
+                                viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                    d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z" />
+                                <path fill-rule="evenodd"
+                                    d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
+                            </svg><span>&nbsp</span>Login</a>
+                    </li>
+
+
+
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Artist, song..." aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+        </nav>
+    </header>
+
+
+    <!--Header with one Title-->
+    <header class="row">
+        <h1 class="text-center m-3">Artist</h1>
+    </header>
+
+    <div class="container-fluid row">
+        <!--Search form-->
+        <form name="searchBar" id="searchBar" class="justify-content-center col-12 row mt-1 mb-5">
+            <div class="col-md-12 col-lg-9 col-sm-12">
+                <input type="text" id="searchInput" name="name_artist" placeholder="ex: The Beatles, Radiohead..."
+                    class="form-control  bg-dark mb-1 text-light">
+            </div>
+            <div class="col-md-12 col-lg-3 col-sm-12">
+                <button type="submit" class="form-control btn btn-success" id='buttonReset'><svg
+                        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-search" viewBox="0 0 16 16">
+                        <path
+                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                    </svg> Search</button>
+            </div>
+        </form>
+    </div>
+    <!--Display the results of the search-->
+    <div class="row result">
+        <div id="results" class=" col-md-8 col-sm-12 row m-2 justify-content-center align-self-start">
+            <h3 id="nberOfResults">Result</h3>
+            <!--Display the books-->
+            <table id="artistTable" class="table text-start">
+                <tbody id="bookSearchOutput" class="text-warning">
+
+                </tbody>
+            </table>
+        </div>
+        <br><br><br>
+        <div id="details" class="col-md-5 col-sm-8 row m-2 justify-content-center align-self-start">
+            <h3>Album</h3>
+            <table id="albumTable" class="table table-hover">
+                <tbody id="albumSearchOutput" class="text-warning">
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6 col-sm-8 ">
+            <div id="tracksDisplay" >
+                <table id="trackTable" class="table">
+                    <tbody id="trackSearchOutput" class="table bg-info justify-content-center align-self-end">
+                    </tbody>
+                </table>
+            </div>
+            <div id="showLyrics" >
+                <table class='table'>
+                    <tbody id="lyricsSearchOutput" class="table bg-info justify-content-center">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="pagination"></div>
+    </div>
+
+
+
+</body>
+
+</html>

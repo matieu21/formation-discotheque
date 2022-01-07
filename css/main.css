@@ -1,0 +1,21 @@
+input, textarea{
+    background-color: black;
+    color: white;
+}
+
+img{
+    display: block;
+    text-align: center;
+}
+
+#bookAuthors{
+    margin-top: -15px;
+}
+
+.yellow{
+    color:chocolate;
+}
+
+a {
+    margin-top: -45px;
+}
