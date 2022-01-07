@@ -1,0 +1,22 @@
+{
+  "name": "formation-discotheque",
+  "version": "1.0.0",
+  "description": "Mon projet de fin de formation",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coppee/formation-discotheque.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/coppee/formation-discotheque/issues"
+  },
+  "homepage": "https://github.com/coppee/formation-discotheque#readme",
+  "dependencies": {
+    "jquery": "^3.6.0"
+  }
+}
