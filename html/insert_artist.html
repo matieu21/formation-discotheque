@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insert</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="../libs/react.development.js"></script>
+    <script src="../libs/react-dom.development.js"></script>
+    <script src="../libs/babel.min.js"></script>
+    <link rel="stylesheet" href="../css/style.css" id="theme">
+</head>
+
+<body>
+    <header id='header'>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="index.html">Home</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="insert.html">New/Insert <span
+                                class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="wantlist.html">Wantlist</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="disco.html">My Library<span class="sr-only">(current)</span></a>
+                    </li>
+
+                    
+
+
+
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Artist, song..." aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+        </nav>
+    </header>
+    
+
+    <div id="app" class="col-md-4 ml-auto mr-auto"></div>
+
+    <div>
+        <p>Back To Insert Page, click <a href="insert.html">here</a></p>
+    </div>
+   
+
+    <script type="text/babel">
+
+        //////////////////////////////////////////////input Artist//////////////////////////
+
+        var resultText = ""
+
+        class InputForm extends React.Component {
+            constructor(props) {
+                super(props)
+                this.state = {
+                    name_artist: this.props.name_artist,
+                    
+                    
+                    site_web_artist: this.site_web_artist,
+                    photo_artist: this.props.photo_artist,
+                    message: ""
+                }
+
+                this.handleChangeTextInput = this.handleChangeTextInput.bind(this)
+
+                this.handleSubmit = this.handleSubmit.bind(this)
+            } /// constructor
+
+
+            /*
+            CHANGE
+            */
+            handleChangeTextInput(event) {
+                console.clear()
+                const name = event.target.name
+                const value = event.target.value
+                console.log("name : " + name)
+                console.log("value : " + value)
+                this.setState({
+                    [name]: value /// Pour faire du générique
+                    //cp: value
+                })
+                console.log("State " + "name_artist" + " : " + this.state.name_artist)
+              
+                console.log("State " + "site_web_artist" + " : " + this.state.site_web_artist)
+                console.log("State " + "photo_artist" + " : " + this.state.photo_artist)
+            } /// handleChangeTextInput
+
+
+
+            /*
+            SUBMIT EN MODE GET
+            */
+            handleSubmit(event) {
+                event.preventDefault()
+                let URL = "http://localhost:8082/artistInsertViaProcStockSQLGET?"
+                URL += "name_artist=" + this.state.name_artist
+                
+                URL += "&site_web_artist=" + this.state.site_web_artist
+                URL += "&photo_artist=" + this.state.photo_artist
+                console.log(URL)
+                fetch(URL)
+                    .then(response => {
+                        console.log("RESPONSE")
+                        console.log(response)
+                        return response.json()
+                    })
+                    .then((result) => {
+                        console.log("RESULT")
+                        // Tableau ordinal contenant 0 ou 1 objet JSON
+                        console.log(result)
+                        if (result.affectedRows == 1) {
+                            resultText = "Insertion réussie !"
+
+                        } else {
+                            resultText = "Insertion ratée !"
+                            resultText = result[0]
+                        }
+                        console.log("resultText")
+                        console.log(resultText)
+                        this.setState({ message: resultText })
+                    },
+                        (error) => {
+                            // Erreur HTTP
+                            console.log(error)
+                        }
+                    )
+            } /// handleSubmit
+
+
+            render() {
+                return (
+
+                    <div id="centre" classname="article mt-1">
+                        <legend className="legend">Nouvel artiste</legend>
+                        <form onSubmit={this.handleSubmit} method="GET">
+
+                            <div className="form-group row">
+                                <label for="nom" className="etiquette col-sm col-form-label col-form-label-sm">Name: </label>
+
+                                <div className="col-sm-10">
+                                    <input type="text" name="name_artist" className="form-control " id="nom" value={this.state.name_artist} onChange={this.handleChangeTextInput} placeholder="Nom de l'artiste *"
+                                        required />
+                                </div>
+
+                            </div>
+                
+                            <div className="form-group row">
+                                <label for="pseudo" className="etiquette col-sm col-form-label col-form-label-sm">Website: </label>
+                                <div className="col-sm-10">
+                                    <input type="text" name="site_web_artist" id="pseudo" value={this.state.site_web_artist} onChange={this.handleChangeTextInput} className="form-control"
+                                       />
+                                </div>
+
+                            </div>
+
+
+                            <div className="form-group row">
+                                <label for="mdp" className="etiquette col-sm col-form-label col-form-label-sm">Photo: </label>
+                                <div className="col-sm-10">
+                                    <input type="text" name="photo_artist" id="mdp" value={this.state.photo_artist} onChange={this.handleChangeTextInput} className="form-control"
+                                    />
+
+                                </div>
+
+                            </div>
+
+                            <p>
+                                <input id="btValider" type="submit" value="Envoyer" />
+                            </p>
+
+
+
+
+
+
+                        </form>
+
+                        <br /><br />
+
+
+
+                    </div>
+                )
+            } /// render
+
+        } /// CLASS
+
+        // MAIN
+        ReactDOM.render(<InputForm />, document.getElementById("app"))
+        //////////////Fin input Artist///////////////////////////

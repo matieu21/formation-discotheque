@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insert</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="../libs/react.development.js"></script>
+    <script src="../libs/react-dom.development.js"></script>
+    <script src="../libs/babel.min.js"></script>
+    <link rel="stylesheet" href="../css/style.css" id="theme">
+</head>
+
+<body>
+    <header id='header'>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="index.html">Home</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="insert.html">New/Insert <span
+                                class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="wantlist.html">Wantlist</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="disco.html">My Library<span class="sr-only">(current)</span></a>
+                    </li>
+
+                    
+
+
+
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Artist, song..." aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+        </nav>
+    </header>
+    
+
+    
+    <div id='app_3' class="col-md-4 ml-auto mr-auto"></div>
+
+    <div>
+        <p>Back To Insert Page, click <a href="insert.html">here</a></p>
+    </div>
+
+    <script type="text/babel">
+
+               ////////////////////input tracks//////////////////////////
+
+
+               var resultText = ""
+
+class InputForm_3 extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            name_track: this.props.name_track,
+            duration_track: this.props.duration_track,
+            author_track: this.props.author_track,
+            lyrics_track: this.props.lyrics_track,
+            order_title_track: this.props.order_title_track,
+            id_album: this.props.id_album,
+            albums: [],
+            message: ""
+        }
+
+        this.handleChangeTextInput_3 = this.handleChangeTextInput_3.bind(this)
+
+        this.handleSubmit_3 = this.handleSubmit_3.bind(this)
+        this.handleSubmit_album = this.handleSubmit_album.bind(this)
+    } /// constructor
+
+    componentDidMount() {
+        // URL sur le serveur
+        // Problème de CROSS-ORIGIN avec PHP si les 2 scripts ne sont pas sur le même serveur
+        fetch("http://localhost:8082/showAlbumSQL")
+            .then(response => {
+                console.log("RESPONSE")
+                console.log(response)
+                return response.json()
+            })
+            .then(result => {
+                console.log("RESULT");
+                // Tableau ordinal d’objets JSON
+                console.log(result)
+                this.setState({ albums: result })
+            },
+                error => {
+                    console.log("ERROR")
+                    console.log(error)
+                }
+            )
+    } /// componentDidMount
+    /*
+    CHANGE
+    */
+    handleChangeTextInput_3(event) {
+        console.clear()
+        const name = event.target.name
+        const value = event.target.value
+        console.log("name : " + name)
+        console.log("value : " + value)
+        this.setState({
+            [name]: value
+            /// Pour faire du générique
+            //cp: value
+        })
+        console.log("State " + "name_track" + " : " + this.state.name_track)
+        console.log("State " + "duration_track" + " : " + this.state.duration_track)
+        console.log("State " + "author_track" + " : " + this.state.author_track)
+        console.log("State " + "lyrics_track" + " : " + this.state.lyrics_track)
+        console.log("State " + "order_title_track" + " : " + this.state.order_title_track)
+        console.log("State " + "id_album" + " : " + this.state.id_album)
+    } /// handleChangeTextInput
+
+    
+
+    /*
+    SUBMIT EN MODE GET
+    */
+    handleSubmit_3(event) {
+        event.preventDefault()
+        let URL = "http://localhost:8082/tracksInsertViaProcStockSQLGET?"
+        URL += "name_track=" + this.state.name_track
+        URL += "&duration_track=" + this.state.duration_track
+        URL += "&author_track=" + this.state.author_track
+        URL += "&lyrics_track=" + this.state.lyrics_track
+        URL += "&order_title_track=" + this.state.order_title_track
+        URL += "&id_album=" + this.state.id_album
+        console.log(URL)
+        fetch(URL)
+            .then(response => {
+                console.log("RESPONSE")
+                console.log(response)
+                return response.json()
+            })
+            .then((result) => {
+                console.log("RESULT")
+                // Tableau ordinal contenant 0 ou 1 objet JSON
+                console.log(result)
+                if (result.affectedRows == 1) {
+                    resultText = "Insertion réussie !"
+
+                } else {
+                    resultText = "Insertion ratée !"
+                    resultText = result[0]
+                }
+                console.log("resultText")
+                console.log(resultText)
+                this.setState({ message: resultText })
+            },
+                (error) => {
+                    // Erreur HTTP
+                    console.log(error)
+                }
+            )
+    } /// handleSubmit
+    
+
+    handleSubmit_album(event) {
+        event.preventDefault()
+        let URL2 = "http://localhost:8082/trackInsertViaProcStockSQLGET?"
+        URL2 += "id_album=" + this.state.id_album
+        fetch(URL2)
+            .then(response => {
+                console.log("RESPONSE")
+                console.log(response)
+                return response.json()
+            })
+            .then((result) => {
+                let resultText = ""
+                console.log("RESULT")
+                console.log(result)
+                this.setState({ message: result })
+            },
+                (error) => {
+                    // Erreur HTTP
+                    console.log(error)
+                }
+            )
+    } /// handleSubmit en mode GET
+
+
+    render() {
+        return (
+
+            <div id="centre" classname="article">
+                <legend className="legend">Nouvelle chanson</legend>
+                <form onSubmit={this.handleSubmit_3} method="POST">
+
+                    <div className="form-group row">
+                        <label for="nom" className="etiquette col-sm col-form-label col-form-label-sm">Nom: </label>
+
+                        <div className="col-sm-10">
+                            <input type="text" name="name_track" className="form-control " id="nom" value={this.state.name_track} onChange={this.handleChangeTextInput_3} placeholder="Nom de la chanson *"
+                                required />
+                        </div>
+
+                    </div>
+
+
+
+
+                    <div className="form-group row">
+                        <label for="nom" className="etiquette col-sm col-form-label col-form-label-sm">durée de la chanson: </label>
+                        <div className="col-sm-10">
+                            <input type="text" name="duration_track" id="prenom" required value={this.state.duration_track} onChange={this.handleChangeTextInput_3} className="form-control "
+                            />
+
+                        </div>
+
+                    </div>
+
+
+
+
+
+                    <div className="form-group row">
+                        <label for="pseudo" className="etiquette col-sm col-form-label col-form-label-sm">Auteur/compositeur </label>
+                        <div className="col-sm-10">
+                            <input type="text" name="author_track" id="pseudo" value={this.state.author_track} onChange={this.handleChangeTextInput_3} className="form-control "
+                                />
+                        </div>
+
+                    </div>
+
+
+                    <div className="form-group row">
+                        <label for="mdp" className="etiquette col-sm col-form-label col-form-label-sm">Paroles: </label>
+                        <div className="col-sm-10">
+                            <input type="text" name="lyrics_track" id="mdp" value={this.state.lyrics_track} onChange={this.handleChangeTextInput_3} className="form-control "
+                            />
+
+                        </div>
+
+                    </div>
+                    <div className="form-group row">
+                        <label for="mdp" className="etiquette col-sm col-form-label col-form-label-sm">Ordre : </label>
+                        <div className="col-sm-10">
+                            <input type="text" name="order_title_track"  value={this.state.order_title_track} onChange={this.handleChangeTextInput_3} className="form-control "
+                            />
+
+                        </div>
+
+                    </div>
+                    <div>
+                        <div onSubmit={this.handleSubmit_album} method="POST">
+                            <p>
+                                <label className="etiquette">
+                                    Albums : &nbsp;
+                                </label>
+                                <select name="id_album" id="id" onChange={this.handleChangeTextInput_3} className="col-sm-10"><option>-Veuillez selectionner un album-</option>
+                                    {
+                                        this.state.albums.map((item, index) => {
+                                            return <option key={index} value={item.id_album}>{item.name_album}</option>
+                                        })
+                                    }
+                                </select>
+                            </p>
+
+                        </div>
+                        <p>
+                            {this.state.message}
+                        </p>
+                    </div>
+
+
+                    <p>
+                        <input id="btValider" type="submit" value="Envoyer" />
+                    </p>
+
+
+
+
+
+
+                </form>
+
+                <br /><br />
+
+
+
+            </div>
+        )
+    } /// render
+
+} /// CLASS
+
+// MAIN
+
+ReactDOM.render(<InputForm_3 />, document.getElementById("app_3"))
+//////////////Fin input tracks///////////////////////////
+
+
+
+</script>
+</body>
+
+</html>

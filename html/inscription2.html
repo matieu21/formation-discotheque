@@ -29,53 +29,12 @@ Inscription.html
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="insert.html">New/Insert <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link " href="wantlist.html">Wantlist</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="disco.html">My Library<span class="sr-only">(current)</span></a>
-                    </li>
-                    <div>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="inscription.html"><svg xmlns="http://www.w3.org/2000/svg"
-                                    width="16" height="16" fill="currentColor" class="bi bi-person-fill"
-                                    viewBox="0 0 16 16">
-                                    <path
-                                        d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-                                </svg><span>&nbsp</span>Sign Up</a>
-                        </li>
-                    </div>
-                    <div>
-                        <li class="nav-item">
-                            <a class="nav-link" href="authentification.html"><svg xmlns="http://www.w3.org/2000/svg"
-                                    width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right"
-                                    viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd"
-                                        d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z" />
-                                    <path fill-rule="evenodd"
-                                        d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
-                                </svg><span>&nbsp</span>Login</a>
-                        </li>
-                    </div>
-
-
-
-                </ul>
-                <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Artist, song..." aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
-            </div>
+            
         </nav>
     </header>
 
 
-    <div id="app"></div>
+    <div id="app" class="col-md-4 ml-auto mr-auto"></div>
 
 
 
@@ -174,13 +133,13 @@ Inscription.html
             render() {
                 return (
 
-                    <div id="centre" classname="article">
+                    <div id="centre" className="article">
                         <legend className="legend">Inscription</legend>
                         <form onSubmit={this.handleSubmit} method="GET">
                             <div>
                                 <label className="etiquette">Civilité: </label>
                                 <div>
-                                    <input type="radio" name="civilite" id="civilite_H" value="H" className="obligatoire " required/>
+                                    <input type="radio" name="civilite" id="civilite_H" value="H" className="obligatoire " required />
                                     <label for="civilite_H">Monsieur </label>
                                     <input type="radio" name="civilite" id="civilite_F" value="F" className="obligatoire" />
                                     <label for="civilite_F">Madame </label>
@@ -190,11 +149,11 @@ Inscription.html
                             </div>
 
 
-                            <div className="form-group row">
-                                <label for="nom" className="etiquette col-sm-2 col-form-label col-form-label-sm">Nom: </label>
+                            <div >
+                                <label for="nom" >Nom: </label>
 
-                                <div className="col-sm-10">
-                                    <input type="text" name="name_user" className="form-control w-25" id="nom" value={this.state.name_user} onChange={this.handleChangeTextInput} placeholder="Votre nom *"
+                                <div>
+                                    <input type="text" name="name_user" className="form-control " id="nom" value={this.state.name_user} onChange={this.handleChangeTextInput} placeholder="Votre nom *"
                                         required />
                                 </div>
                                 <label id="lblMessageNom"></label>
@@ -203,41 +162,41 @@ Inscription.html
 
 
 
-                            <div className="form-group row">
-                                <label for="nom" className="etiquette col-sm-2 col-form-label col-form-label-sm">Prénom: </label>
-                                <div className="col-sm-10">
-                                    <input type="text" name="firstname_user" id="prenom" required value={this.state.firstname_user} onChange={this.handleChangeTextInput} className="form-control w-25"
-                                        placeholder="Votre prénom *" required/>
+                            <div>
+                                <label for="nom">Prénom: </label>
+                                <div>
+                                    <input type="text" name="firstname_user" id="prenom" required value={this.state.firstname_user} onChange={this.handleChangeTextInput} className="form-control"
+                                        placeholder="Votre prénom *" required />
 
                                 </div>
                                 <label id="lblMessagePrenom"></label>
                             </div>
 
 
-                            <div className="form-group row">
-                                <label for="email" className="etiquette col-sm-2 col-form-label col-form-label-sm">E-mail: </label>
-                                <div className="col-sm-10">
-                                    <input type="text" name="email_user" id="email" className="form-control w-25"
-                                        value={this.state.email_user} onChange={this.handleChangeTextInput} placeholder="Votre mail *" required/>
+                            <div >
+                                <label for="email" >E-mail: </label>
+                                <div>
+                                    <input type="text" name="email_user" id="email" className="form-control"
+                                        value={this.state.email_user} onChange={this.handleChangeTextInput} placeholder="Votre mail *" required />
                                 </div>
                                 <label id="lblMessageEmail"></label>
                             </div>
 
 
-                            <div className="form-group row">
-                                <label for="pseudo" className="etiquette col-sm-2 col-form-label col-form-label-sm">Pseudo: </label>
-                                <div className="col-sm-10">
-                                    <input type="text" name="pseudo_user" id="pseudo" value={this.state.pseudo_user} onChange={this.handleChangeTextInput} className="form-control w-25"
-                                        placeholder="Votre pseudo *" required/>
+                            <div>
+                                <label for="pseudo">Pseudo: </label>
+                                <div>
+                                    <input type="text" name="pseudo_user" id="pseudo" value={this.state.pseudo_user} onChange={this.handleChangeTextInput} className="form-control"
+                                        placeholder="Votre pseudo *" required />
                                 </div>
                                 <label id="lblMessagePseudo"></label>
                             </div>
 
 
-                            <div className="form-group row">
-                                <label for="mdp" className="etiquette col-sm-2 col-form-label col-form-label-sm">Mot de passe: </label>
-                                <div className="col-sm-10">
-                                    <input type="password" name="password_user" id="mdp" value={this.state.password_user} onChange={this.handleChangeTextInput} className="form-control w-25"
+                            <div>
+                                <label for="mdp" >Mot de passe: </label>
+                                <div>
+                                    <input type="password" name="password_user" id="mdp" value={this.state.password_user} onChange={this.handleChangeTextInput} className="form-control"
                                         placeholder="Votre mot de passe *" />
 
                                 </div>
@@ -245,18 +204,18 @@ Inscription.html
                             </div>
 
 
-                            <div className="form-group row">
-                                <label for="mdp2" className="etiquette col-sm-2 col-form-label col-form-label-sm">Retapez le mot de passe:
+                            <div >
+                                <label for="mdp2" >Retapez le mot de passe:
                                 </label>
-                                <div className="col-sm-10">
-                                    <input type="password" name="password2_user" id="mdp2" value={this.state.password2_user} onChange={this.handleChangeTextInput} className="form-control w-25"
-                                        placeholder="Votre mot de passe *" required/>
+                                <div >
+                                    <input type="password" name="password2_user" id="mdp2" value={this.state.password2_user} onChange={this.handleChangeTextInput} className="form-control"
+                                        placeholder="Votre mot de passe *" required />
                                 </div>
                                 <label id="lblMessageMDP2"></label>
                             </div>
 
                             <p>
-                                <input id="btValider" type="submit" value="Envoyer"/>
+                                <input id="btValider" type="submit" value="Envoyer" />
                             </p>
                             <div>
                                 <p>Les champs indiqués par une * sont obligatoires.</p>
@@ -271,6 +230,7 @@ Inscription.html
                         </p>
 
                     </div>
+
                 )
             } /// render
 
