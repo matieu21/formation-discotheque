@@ -19,7 +19,7 @@
 
     document.getElementById("btValider").addEventListener(
         "click",
-        sauthentifier,
+        sauthentifier (),
     )
     document.getElementById("chkMdpVisible").onclick = mdpVisible
     document.getElementById("motDePasseOublie").onclick = mdpOublie

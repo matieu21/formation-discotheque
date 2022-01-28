@@ -33,14 +33,7 @@ let URLTracks = "http://localhost:8082/getAlbumDetail?id_album=";
 let URLLyrics = "http://localhost:8082/showTracksLyrics?id_track="
 //let to get lyrics
 
-let currentPage = 1;
-//let to show the current page
 
-const shownNumberOfPages = 4;
-//let to show number of albums per page
-
-let pageSegmentNumber = 1;
-//
 
 
 ////////////////////////////////////////////////////////////////////////////////////
@@ -93,10 +86,11 @@ function albumSearch(artistListArray) {
         albumDisplay += `<tr class="row"> 
                             <td class=" d-flex justify-content-between">
                                 <img src="${item.photo_artist}" width="100px" style= "border-radius:10px">
-                                    <span class="fs-3">${item.name_artist}</span><a href="http://${item.site_web_artist}" target=_blank class="text-warning">${item.site_web_artist}</a>
-                                <button class="btn btn-success btn-warning">
+                                    <span class="fs-3 text-light">${item.name_artist}</span><a href="http://${item.site_web_artist}" target=_blank class="text-light">${item.site_web_artist}</a>
+                                <button class="btn btn-success btn-light">
                                     Details
                                 </button>
+                                
                             </td>
                         </tr>`
 
@@ -134,46 +128,9 @@ async function albumInfo(albumURL) {
 
     showAlbumList(albumDetailArray)
 
-    numberOfBooks = data.total;
-
-    // Affichage de la pagination
-    showPagination(numberOfBooks);
-
+    
 }
 
-/////////////////////////////////// Show Pagination////////////
-function showPagination(numberOfBooks) {
-    const numberOfPages = Math.ceil(numberOfBooks / 4);
-    const resultString = ` ${numberOfBooks} résultats page ${currentPage} sur ${numberOfPages}`;
-
-    console.log(resultString);
-
-    // Insertion de resultString dans le DOM
-    $("#searchResult").text(resultString);
-
-    // génération des liens vers les pages
-    let html = `<li class="page-item">
-                   <a href="#" class="page-link" id="prevPageSegment">Précédent</a>
-                    </li>`;
-    const start = ((pageSegmentNumber -1) * shownNumberOfPages) + 1;
-    const end = Math.min(pageSegmentNumber * shownNumberOfPages, numberOfPages);
-    for (let page = start; page <= end; page++) {
-        let activeClass = "";
-        if (currentPage == page) {
-            activeClass = "active"
-        }
-           html += `<li class="page-item ${activeClass}">
-                <a href="#" class="page-link page-number">${page}</a>
-               </li>`
-    }
-            
-    html += `<li class="page-item">
-                <a href="#" class="page-link" id="nextPageSegment">Suivant</a>
-            </li>`
-
-    // Insertion des pages dans le DOM
-    $(".pagination").html(html);
-}
 
 function showAlbums() {
 
@@ -194,12 +151,13 @@ function showAlbumList(albumDetailArray) {
     for (item of albumDetailArray) {
 
         html += `<tr>
-                    <td class="list-group-item d-flex justify-content-between" >
+                    <td class="list-group-item d-flex justify-content-between text-light" >
                     <img src="${item.photo_album}" width="60px" style= "border-radius:10px"> 
                         ${item.name_album}
-                    <button class="btn btn-success delete btn-warning"> 
+                    <button class="btn btn-success btn-light"> 
                        Details
                     </button>   
+                    
                     </td>
                 </tr>`
 
@@ -254,14 +212,17 @@ function showTrackList(tracksDetailArray) {
                     <td>${item.duration_track} min</td>
                     <td>${item.order_title_track}</td>
                     <td>${item.author_track}</td>
-                    <td><button class="btn btn-success btn-warning">Lyrics</button></td>
+
+                    <td><button class="btn btn-success btn-light"> 
+                       Details
+                    </button> </td>  
+                   
                   </tr>`;
     }
 
     console.log(html2);
     console.log(item.name_track)
     console.log(index)
-
     $("#trackSearchOutput").html(html2);
 
 }
@@ -317,7 +278,7 @@ function showLyricsList(tracksLyricsArray) {
 
     for (item of tracksLyricsArray) {
 
-        html += `<tr><th>Lyrics of ${item.name_track}</th></tr><tr><td>${item.lyrics_track}</td></tr>`;
+        html += `<tr><th class="text-light">Lyrics of ${item.name_track}</th></tr><tr><td>${item.lyrics_track}</td></tr>`;
     }
 
     console.log(html);
@@ -342,7 +303,7 @@ function showLyricsList(tracksLyricsArray) {
 
 
 $(document).ready(function () {
-    const searchForm = $("#form");
+  
     
 
     $("#searchBar").submit(function (event) {
@@ -412,42 +373,9 @@ $(document).ready(function () {
     });
 
 
-            // réaction au clic sur un numéro de page
-            $(".pagination").delegate(".page-number", "click", function () {
-                // on enlève la classe "active" de tous les li de la liste
-                $(".pagination .page-item").removeClass("active");
-                // on ajoute la classe "active" sur le li 
-                // parent du lien sur lequel on a cliqué
-                $(this).parent().addClass("active");
-                // On récupère le numéro de la page cliquée
-                // pour changer la valeur de currentPage
-                currentPage = $(this).text();
+           
 
-                console.log(currentPage);
-
-                // Au changement de page on masque le détails du livre
-                $("#details").hide();
-
-                // Requête pour récupérer les résultats 
-                // qui correspondent à la page
-                albumInfo();
-            });
-
-            $(".pagination").delegate("#nextPageSegment", "click", function(){
-                const numberOfPages = Math.ceil(numberOfBooks/4);
-                const maxSegment = Math.ceil(numberOfPages / shownNumberOfPages);
-                if( pageSegmentNumber < maxSegment){
-                    pageSegmentNumber++;
-                    showPagination(numberOfBooks);
-                } 
-            });
-
-            $(".pagination").delegate("#prevPageSegment", "click", function(){
-                if(pageSegmentNumber > 1){
-                    pageSegmentNumber--;
-                    showPagination(numberOfBooks);
-                }
-            });
+           
 
 
 })

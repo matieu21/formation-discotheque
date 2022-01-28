@@ -175,7 +175,7 @@
                                 <input id="btValider" type="submit" value="Envoyer"/>
                             </p>
                             <div>
-                                <p>Les champs indiqués par une * sont obligatoires.</p>
+                                <p> * sont obligatoires.</p>
                             </div>
                         </form>
 
