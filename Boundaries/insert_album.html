@@ -148,7 +148,7 @@ class InputForm_2 extends React.Component {
     */
     handleSubmit_2(event) {
         event.preventDefault()
-        let URL = "http://localhost:8082/albumInsertViaProcStockSQLGET?"
+        let URL = "http://localhost:8082/albumInsert?"
         URL += "name_album=" + this.state.name_album
         URL += "&photo_album=" + this.state.photo_album
        
@@ -156,6 +156,7 @@ class InputForm_2 extends React.Component {
         URL += "&total_tracks_album=" + this.state.total_tracks_album
         URL += "&year_release_album=" + this.state.year_release_album
         URL += "&id_artist=" +this.state.id_artist
+
         console.log(URL)
         fetch(URL)
             .then(response => {
@@ -167,16 +168,20 @@ class InputForm_2 extends React.Component {
                 console.log("RESULT")
                 // Tableau ordinal contenant 0 ou 1 objet JSON
                 console.log(result)
-                if (result.affectedRows == 1) {
-                    resultText = "Insertion réussie !"
-
+                if (result == 1) {
+                    
+                                      
+                                        resultText = "Album added to list!"
+                                    
+                   
                 } else {
-                    resultText = "Insertion ratée !"
-                    resultText = result[0]
+                    resultText = "This album already exists !"
+                    
                 }
-                console.log("resultText")
+                
                 console.log(resultText)
-                this.setState({ message: resultText })
+                
+                document.getElementById("message").innerHTML= resultText
             },
                 (error) => {
                     // Erreur HTTP
@@ -190,7 +195,7 @@ class InputForm_2 extends React.Component {
         
         handleSubmit_artist(event) {
         event.preventDefault()
-        let URL2 = "http://localhost:8082/albumInsertViaProcStockSQLGET?"
+        let URL2 = "http://localhost:8082/albumInsert?"
         URL2 += "id_artist=" + this.state.id_artist
         fetch(URL2)
             .then(response => {
@@ -224,7 +229,7 @@ class InputForm_2 extends React.Component {
                         <label for="nom" className="etiquette col-sm col-form-label col-form-label-sm text-light">Album Name: </label>
 
                         <div className="col-sm-10">
-                            <input type="text" name="name_album" className="form-control text-light" id="nom" value={this.state.name_album} onChange={this.handleChangeTextInput_2} placeholder="Nom de l'album *"
+                            <input type="text" name="name_album" className="form-control" id="nom" value={this.state.name_album} onChange={this.handleChangeTextInput_2} 
                                 required />
                         </div>
 
@@ -270,7 +275,7 @@ class InputForm_2 extends React.Component {
                                 <label className="etiquette col-sm col-form-label col-form-label-sm text-light">
                                     Artists : &nbsp;
                                 </label>
-                                <select name="id_artist" id="id" onChange={this.handleChangeTextInput_2} className="col-sm-10 form-control"><option>-Please select an artist-</option>
+                                <select name="id_artist" id="id" onChange={this.handleChangeTextInput_2} className="col-sm-10 form-control bg-dark text-light"><option>-Please select an artist-</option>
                                     { 
                                         this.state.artists.sort().map((item, index) => {
                                             
@@ -291,7 +296,7 @@ class InputForm_2 extends React.Component {
                     <p>
                         <input id="btValider" className="btn btn-success btn-light" type="submit" value="Envoyer" />
                     </p>
-
+                    <p id="message" className="text-light"></p>
 
 
 

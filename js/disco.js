@@ -21,7 +21,9 @@ let tracksDetailArray = []
 let tracksLyricsArray = []
 //let to manage the lyrics list
 
-let URLArtist = "http://localhost:8082/showArtistSQL";
+let albumsArray =[]
+
+let URLArtist = "http://localhost:8082/showArtistByName";
 //let to get artists
 
 let URLAlbum = "http://localhost:8082/showAlbumDetail?id_artist=";
@@ -33,7 +35,7 @@ let URLTracks = "http://localhost:8082/getAlbumDetail?id_album=";
 let URLLyrics = "http://localhost:8082/showTracksLyrics?id_track="
 //let to get lyrics
 
-
+let URLAllAlbums= "http://localhost:8082/showAlbums";
 
 
 ////////////////////////////////////////////////////////////////////////////////////
@@ -69,6 +71,8 @@ async function getArtist() {
 
     albumSearch(data)
     console.log(data)
+
+    
 
 }
 
@@ -172,8 +176,6 @@ function showAlbumList(albumDetailArray) {
 }
 
 /////////////////////////////////////End Get Albums///////////////////////////////////
-
-
 
 /////////////////////////////////////Get Tracks//////////////////////////////////////
 
@@ -305,22 +307,16 @@ function showLyricsList(tracksLyricsArray) {
 $(document).ready(function () {
   
     
-
-    $("#searchBar").submit(function (event) {
-        event.preventDefault();
-        
+    
+        $("#searchBar").submit(function (event) {
+            event.preventDefault()
             searchInput = $(this).serialize();
             getArtist(searchInput)
-
-            /*
-        if($("#lyricsSearchOutput")!="" || $("#trackSearchOutput")!="" || {
             
-        }else{
-            $("#lyricsSearchOutput").reset()
-            $("#trackSearchOutput").remove()
-            $('albumSearchOutput').empty()
-        }*/
+
     })
+        
+    
 
     /////////////////////////////////////Get Albums Button////////////////////////////////
 
@@ -328,14 +324,12 @@ $(document).ready(function () {
 
     $("#artistTable").delegate("tr", "click", function () {
         
-        if($('albumSearchOutput')!=""){
+       
             const index = $(this).index();
             showAlbums(artistListArrayId[index]);
            
             console.log(index)
-        }else {
-            $('albumSearchOutput').reset()
-        }
+        
         
         
     });
@@ -359,7 +353,7 @@ $(document).ready(function () {
 
     /////////////////////////////////////Get Lyrics Button////////////////////////////////
 
-
+    
 
     $("#trackTable").delegate("tr", "click", function () {
 

@@ -64,7 +64,7 @@
     
 
     <div id="app" class="col-md-4 m-auto"></div>
-
+    <br><br><br> <br><br><br>
     <div>
         <p class="text-light">Back To Insert Page, click <a href="insert.html" class="link-light">here</a></p>
     </div>
@@ -120,7 +120,7 @@
             */
             handleSubmit(event) {
                 event.preventDefault()
-                let URL = "http://localhost:8082/artistInsertViaProcStockSQLGET?"
+                let URL = "http://localhost:8082/artistInsert?"
                 URL += "name_artist=" + this.state.name_artist
                 
                 URL += "&site_web_artist=" + this.state.site_web_artist
@@ -128,24 +128,30 @@
                 console.log(URL)
                 fetch(URL)
                     .then(response => {
-                        console.log("RESPONSE")
+                       
                         console.log(response)
                         return response.json()
                     })
                     .then((result) => {
-                        console.log("RESULT")
+                        
                         // Tableau ordinal contenant 0 ou 1 objet JSON
                         console.log(result)
-                        if (result.affectedRows == 1) {
-                            resultText = "Insertion réussie !"
+                        if (result == 1) {
+                            resultText = "Artist created !"
+                            
 
-                        } else {
-                            resultText = "Insertion ratée !"
-                            resultText = result[0]
+                        } 
+                        
+                        
+                        else  {
+                            resultText = "This Artist already exists  !"
+                           
+                     
                         }
-                        console.log("resultText")
+                       
                         console.log(resultText)
-                        this.setState({ message: resultText })
+                        
+                        document.getElementById("message").innerHTML= resultText
                     },
                         (error) => {
                             // Erreur HTTP
@@ -163,10 +169,10 @@
                         <form onSubmit={this.handleSubmit} method="GET">
 
                             <div>
-                                <label for="nom" className="etiquette col-sm col-form-label col-form-label-sm text-light">Name: </label>
+                                <label for="nom" className="etiquette col-sm col-form-label col-form-label-sm">Name: </label>
 
                                 <div className="col-sm-10">
-                                    <input type="text" name="name_artist" className="form-control text-light" id="nom" value={this.state.name_artist} onChange={this.handleChangeTextInput} placeholder="Nom de l'artiste *"
+                                    <input type="text" name="name_artist" className="form-control" id="nom" value={this.state.name_artist} onChange={this.handleChangeTextInput} placeholder="Nom de l'artiste *"
                                         required />
                                 </div>
 
@@ -195,18 +201,10 @@ br
                             <p>
                                 <input id="btValider" className="btn btn-success btn-light" type="submit" value="Envoyer" />
                             </p>
-
-
-
-
-
-
+                            <p id="message" className="text-light"></p>
                         </form>
-
                         <br /><br />
-
-
-
+                        
                     </div>
                 )
             } /// render

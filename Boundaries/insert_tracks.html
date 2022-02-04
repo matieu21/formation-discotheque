@@ -99,7 +99,7 @@ class InputForm_3 extends React.Component {
     componentDidMount() {
         // URL sur le serveur
         // Problème de CROSS-ORIGIN avec PHP si les 2 scripts ne sont pas sur le même serveur
-        fetch("http://localhost:8082/showAlbumSQL")
+        fetch("http://localhost:8082/showAlbums")
             .then(response => {
                 console.log("RESPONSE")
                 console.log(response)
@@ -146,7 +146,7 @@ class InputForm_3 extends React.Component {
     */
     handleSubmit_3(event) {
         event.preventDefault()
-        let URL = "http://localhost:8082/tracksInsertViaProcStockSQLGET?"
+        let URL = "http://localhost:8082/tracksInsert?"
         URL += "name_track=" + this.state.name_track
         URL += "&duration_track=" + this.state.duration_track
         URL += "&author_track=" + this.state.author_track
@@ -164,16 +164,16 @@ class InputForm_3 extends React.Component {
                 console.log("RESULT")
                 // Tableau ordinal contenant 0 ou 1 objet JSON
                 console.log(result)
-                if (result.affectedRows == 1) {
-                    resultText = "Insertion réussie !"
+                if (result == 1) {
+                    resultText = "Track added to album !"
 
                 } else {
-                    resultText = "Insertion ratée !"
-                    resultText = result[0]
+                    resultText = "This track already exists !"
+                   
                 }
                 console.log("resultText")
                 console.log(resultText)
-                this.setState({ message: resultText })
+                document.getElementById("message").innerHTML= resultText
             },
                 (error) => {
                     // Erreur HTTP
@@ -185,7 +185,7 @@ class InputForm_3 extends React.Component {
 
     handleSubmit_album(event) {
         event.preventDefault()
-        let URL2 = "http://localhost:8082/trackInsertViaProcStockSQLGET?"
+       let URL2 = "http://localhost:8082/trackInsert?"
         URL2 += "id_album=" + this.state.id_album
         fetch(URL2)
             .then(response => {
@@ -218,7 +218,7 @@ class InputForm_3 extends React.Component {
                         <label for="nom" className="etiquette col-sm col-form-label col-form-label-sm text-light">Title Track: </label>
 
                         <div className="col-sm-10 text-light">
-                            <input type="text" name="name_track" className="form-control " id="nom" value={this.state.name_track} onChange={this.handleChangeTextInput_3} placeholder="Nom de la chanson *"
+                            <input type="text" name="name_track" className="form-control " id="nom" value={this.state.name_track} onChange={this.handleChangeTextInput_3} 
                                 required />
                         </div>
 
@@ -270,12 +270,12 @@ class InputForm_3 extends React.Component {
 
                     </div>
                     <div>
-                        <div onSubmit={this.handleSubmit_album} method="POST">
+                        <div  method="POST">
                             <p>
                                 <label className="etiquette text-light">
                                     Album : &nbsp;
                                 </label>
-                                <select name="id_album" id="id" onChange={this.handleChangeTextInput_3} className="col-sm-10 form-control"><option>-Please select an album-</option>
+                                <select name="id_album" id="id" onChange={this.handleChangeTextInput_3} className="col-sm-10 form-control bg-dark text-light"><option>-Please select an album-</option>
                                     {
                                         this.state.albums.map((item, index) => {
                                             return <option key={index} value={item.id_album}>{item.name_album}</option>
@@ -296,7 +296,7 @@ class InputForm_3 extends React.Component {
                     </p>
 
 
-
+                    <p id="message" className="text-light"></p>
 
 
 
