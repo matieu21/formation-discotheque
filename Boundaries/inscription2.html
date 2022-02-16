@@ -18,17 +18,14 @@ Inscription.html
 </head>
 
 <body>
-    <header id='header'>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="authentification.html">Home</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="authentification.html">Home</a>
+        <a class="navbar-brand" href="contact.html">Contact Us</a>
+    
+    </nav>
 
-            
-        </nav>
-    </header>
+
+
 
 
     <div id="app" class="col-md-4 m-auto mt-6"></div>
@@ -94,9 +91,9 @@ Inscription.html
                 URL += "&firstname_user=" + this.state.firstname_user
                 URL += "&email_user=" + this.state.email_user
                 URL += "&pseudo_user=" + this.state.pseudo_user
-                URL += "&password_user=" + this.password_user
-                URL += "&password2_user=" + this.password2_user
-                URL += "&role_user=user"
+                URL += "&password_user=" + this.state.password_user
+                URL += "&password2_user=" + this.state.password2_user
+               
                 console.log(URL)
                 fetch(URL)
                     .then(response => {
@@ -131,26 +128,26 @@ Inscription.html
                 return (
 
                     <div id="centre" className="article">
-                        <legend className="legend text-light">Inscription</legend>
+                        <legend className="legend text-light">Sign In</legend>
                         <form onSubmit={this.handleSubmit} method="GET">
                             <div>
-                                <label className="etiquette text-light">Civilité: </label>
+                                <label className="etiquette text-light">Choose: *</label>
                                 <div>
                                     <input type="radio" name="civilite" id="civilite_H" value="H" className="obligatoire text-light" required />
-                                    <label for="civilite_H" className="text-light">Monsieur </label>
+                                    <label for="civilite_H" className="text-light">M. </label>
                                     <input type="radio" name="civilite" id="civilite_F" value="F" className="obligatoire text-light" />
-                                    <label for="civilite_F" className="text-light">Madame </label>
-                                    <label className="texteRouge text-light">*</label>
+                                    <label for="civilite_F" className="text-light">Ms </label>
+                                    <label className="texteRouge text-light"></label>
                                     <label id="lblMessageSexe"></label>
                                 </div>
                             </div>
 
 
                             <div >
-                                <label for="nom" className="text-light">Nom: </label>
+                                <label for="nom" className="text-light">Name: *</label>
 
                                 <div>
-                                    <input type="text" name="name_user" className="form-control " id="nom" value={this.state.name_user} onChange={this.handleChangeTextInput} placeholder="Votre nom *"
+                                    <input type="text" name="name_user" className="form-control " id="nom" value={this.state.name_user} onChange={this.handleChangeTextInput} 
                                         required />
                                 </div>
                                 <label id="lblMessageNom"></label>
@@ -160,10 +157,10 @@ Inscription.html
 
 
                             <div>
-                                <label for="nom" className="text-light">Prénom: </label>
+                                <label for="nom" className="text-light">Firstname: *</label>
                                 <div>
                                     <input type="text" name="firstname_user" id="prenom" required value={this.state.firstname_user} onChange={this.handleChangeTextInput} className="form-control"
-                                        placeholder="Votre prénom *" required />
+                                         required />
 
                                 </div>
                                 <label id="lblMessagePrenom"></label>
@@ -171,30 +168,30 @@ Inscription.html
 
 
                             <div >
-                                <label for="email" className="text-light">E-mail: </label>
+                                <label for="email" className="text-light">Email: *</label>
                                 <div>
                                     <input type="text" name="email_user" id="email" className="form-control"
-                                        value={this.state.email_user} onChange={this.handleChangeTextInput} placeholder="Votre mail *" required />
+                                        value={this.state.email_user} onChange={this.handleChangeTextInput}  required />
                                 </div>
                                 <label id="lblMessageEmail"></label>
                             </div>
 
 
                             <div>
-                                <label for="pseudo" className="text-light">Pseudo: </label>
+                                <label for="pseudo" className="text-light">Pseudo: *</label>
                                 <div>
                                     <input type="text" name="pseudo_user" id="pseudo" value={this.state.pseudo_user} onChange={this.handleChangeTextInput} className="form-control"
-                                        placeholder="Votre pseudo *" required />
+                                       required />
                                 </div>
                                 <label id="lblMessagePseudo"></label>
                             </div>
 
 
                             <div>
-                                <label for="mdp" className="text-light">Mot de passe: </label>
+                                <label for="mdp" className="text-light">Password: *</label>
                                 <div>
                                     <input type="password" name="password_user" id="mdp" value={this.state.password_user} onChange={this.handleChangeTextInput} className="form-control"
-                                        placeholder="Votre mot de passe *" />
+                                         />
 
                                 </div>
                                 <label id="lblMessageMDP"></label>
@@ -202,26 +199,26 @@ Inscription.html
 
 
                             <div >
-                                <label for="mdp2" className="text-light">Retapez le mot de passe:
+                                <label for="mdp2" className="text-light">Repeat your password: *
                                 </label>
                                 <div >
                                     <input type="password" name="password2_user" id="mdp2" value={this.state.password2_user} onChange={this.handleChangeTextInput} className="form-control"
-                                        placeholder="Votre mot de passe *" required />
+                                         required />
                                 </div>
                                 <label id="lblMessageMDP2"></label>
                             </div>
 
                             <p>
-                                <input id="btValider" className="btn btn-success btn-light" type="submit" value="Envoyer" />
+                                <input id="btValider" className="btn btn-success btn-light" type="submit" value="Send" />
                             </p>
                             <div>
-                                <p className="text-light">Les champs indiqués par une * sont obligatoires.</p>
+                                <p className="text-light">Required fields are marked *</p>
                             </div>
                         </form>
 
                         <br /><br />
 
-                        <p className="text-light">Déjà inscrit? Connectez-vous <a href='authentification.html' className="text-light">ici</a> </p>
+                        <p className="text-light">You have an account? Click <a href='authentification.html' className="text-light">here</a> </p>
                         <p>
                             {this.state.message}
                         </p>

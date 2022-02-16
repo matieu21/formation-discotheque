@@ -303,6 +303,9 @@ $connexion = null;
                             <li><a class="dropdown-item text-light " href="insert_tracks.html">New Track</a></li>
                         </ul>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="authentification.html"><img src="../images/logout24.png" ></a>
+                    </li>
                 </ul>
                 
             </div>

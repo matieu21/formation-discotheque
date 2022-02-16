@@ -54,6 +54,9 @@
                             <li><a class="dropdown-item text-light " href="insert_tracks.html">New Track</a></li>
                         </ul>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="authentification.html"><img src="../images/logout24.png" ></a>
+                    </li>
                 </ul>
                 
             </div>
@@ -72,12 +75,12 @@
 
     <script type="text/babel">
 
-             ////////////////////input Albu//////////////////////////
+             ////////////////////input Album//////////////////////////
 
 
              var resultText = ""
 
-class InputForm_2 extends React.Component {
+class Album extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -168,19 +171,11 @@ class InputForm_2 extends React.Component {
                 console.log("RESULT")
                 // Tableau ordinal contenant 0 ou 1 objet JSON
                 console.log(result)
-                if (result == 1) {
-                    
-                                      
-                                        resultText = "Album added to list!"
-                                    
-                   
+                if (result == 1) {            
+                        resultText = "Album added to this artist! "
                 } else {
-                    resultText = "This album already exists !"
-                    
+                    resultText = "Album already exists!"                 
                 }
-                
-                console.log(resultText)
-                
                 document.getElementById("message").innerHTML= resultText
             },
                 (error) => {
@@ -224,51 +219,38 @@ class InputForm_2 extends React.Component {
             <div id="centre" classname="article">
                 <legend className="legend text-light">New Album</legend>
                 <form onSubmit={this.handleSubmit_2} method="GET">
-
                     <div>
                         <label for="nom" className="etiquette col-sm col-form-label col-form-label-sm text-light">Album Name: </label>
-
                         <div className="col-sm-10">
-                            <input type="text" name="name_album" className="form-control" id="nom" value={this.state.name_album} onChange={this.handleChangeTextInput_2} 
+                            <input type="text" name="name_album" placeholder="Album Name *" className="form-control" id="nom" value={this.state.name_album} onChange={this.handleChangeTextInput_2} 
                                 required />
                         </div>
-
                     </div>
-
-
-
-
                     <div>
                         <label for="nom" className="etiquette col-sm col-form-label col-form-label-sm text-light">Cover: </label>
                         <div className="col-sm-10">
-                            <input type="text" name="photo_album" id="prenom" required value={this.state.photo_album} onChange={this.handleChangeTextInput_2} className="form-control "/>
+                            <input type="text" name="photo_album" id="prenom"  value={this.state.photo_album} onChange={this.handleChangeTextInput_2} className="form-control "/>
                         </div>
                     </div>
-
                     <div>
                         <label for="pseudo" className="etiquette col-sm col-form-label col-form-label-sm text-light">Total Tracks: </label>
                         <div className="col-sm-10">
                             <input type="text" name="total_tracks_album" id="pseudo" value={this.state.total_tracks_album} onChange={this.handleChangeTextInput_2} className="form-control"/>
                         </div>
                     </div>
-
                     <div>
                         <label for="mdp" className="etiquette col-sm col-form-label col-form-label-sm text-light">Duration: </label>
                         <div className="col-sm-10">
                             <input type="text" name="duration_album" id="mdp" value={this.state.duration_album} onChange={this.handleChangeTextInput_2} className="form-control"/>
                         </div>
-                    </div>
-                    
+                    </div>                   
                     <div>
                         <label for="mdp" className="etiquette col-sm col-form-label col-form-label-sm text-light">Year's Release: </label>
                         <div className="col-sm-10">
                             <input type="text" name="year_release_album" id="mdp" value={this.state.year_release_album} onChange={this.handleChangeTextInput_2} className="form-control"
                             />
-
                         </div>
-
                     </div>
-
                     <div>
                         <div onSubmit={this.handleSubmit_artist} method="GET">
                             <p>
@@ -280,8 +262,7 @@ class InputForm_2 extends React.Component {
                                         this.state.artists.sort().map((item, index) => {
                                             
                                             return <option key={index} value={item.id_artist}>{item.name_artist}</option>
-                                        })
-                                   
+                                        })                              
                                     }
                                 </select>
                             </p>
@@ -291,23 +272,12 @@ class InputForm_2 extends React.Component {
                             {this.state.message}
                         </p>
                     </div>
-
-
                     <p>
-                        <input id="btValider" className="btn btn-success btn-light" type="submit" value="Envoyer" />
+                        <input id="btValider" className="btn btn-success btn-light" type="submit" value="Submit" />
                     </p>
                     <p id="message" className="text-light"></p>
-
-
-
-
-
-                </form>
-
+               </form>
                 <br /><br />
-
-
-
             </div>
         )
     } /// render
@@ -316,5 +286,5 @@ class InputForm_2 extends React.Component {
 
 // MAIN
 
-ReactDOM.render(<InputForm_2 />, document.getElementById("app_2"))
+ReactDOM.render(<Album />, document.getElementById("app_2"))
 //////////////Fin input album///////////////////////////

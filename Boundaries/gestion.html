@@ -81,7 +81,7 @@
             // URL sur le serveur
             // Problème de CROSS-ORIGIN avec PHP si les 2 scripts ne sont pas sur le même serveur
             // POUR LE REMPLISSAGE DE LA LISTE
-            fetch("http://localhost:8082/userSelectViaProcStockSQLGET")
+            fetch("http://localhost:8082/showAllUsers")
                 .then(response => {
                     console.log("RESPONSE")
                     console.log(response)
@@ -112,7 +112,7 @@
 
         handleSubmit(event) {
             event.preventDefault()
-            let URL = "http://localhost:8082/userDeleteViaProcStockSQLGET?"
+            let URL = "http://localhost:8082/userDelete?"
             URL += "id_user=" + this.state.id_user
             fetch(URL)
                 .then(response => {
@@ -146,11 +146,9 @@
                 <div className="col-md-4 m-auto ">
                     <form onSubmit={this.handleSubmit}>
                         <p >
-                            <label className="etiquette col-sm col-form-label col-form-label-sm text-light">
-                                Choose your user you want to delete: &nbsp;
-                            </label>
+                            
                             <select name="id_user" className="col-sm-10 form-control bg-dark text-light" id="id_user" onChange={this.handleChange}>
-                                <option className="text-center">---------Choose your user---------</option>
+                                <option className="text-center">---------Choose the user you want to delete---------</option>
                                 {
                                     this.state.id_users.map((item, index) => {
                                         return <option  key={index} value={item.id_user}>{"Name:   "}{item.name_user}{"-Firstname:  "}{item.firstname_user} {"(Pseudo: "}{item.pseudo_user}{")"}</option>

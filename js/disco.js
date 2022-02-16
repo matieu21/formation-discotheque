@@ -37,6 +37,8 @@ let URLLyrics = "http://localhost:8082/showTracksLyrics?id_track="
 
 let URLAllAlbums= "http://localhost:8082/showAlbums";
 
+let URLAllArtist = "http://localhost:8082/showArtists";
+
 
 ////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////
@@ -69,7 +71,7 @@ async function getArtist() {
 
     console.log(artistListArray)
 
-    albumSearch(data)
+    albumSearch(artistListArray)
     console.log(data)
 
     
@@ -84,7 +86,7 @@ function albumSearch(artistListArray) {
 
     let albumDisplay = ""
 
-
+ 
     for (item of artistListArray)
 
         albumDisplay += `<tr class="row"> 
@@ -103,15 +105,13 @@ function albumSearch(artistListArray) {
 
 
     //display albumDisplay
-    $("#bookSearchOutput").html(albumDisplay);
+    $("#artistSearchOutput").html(albumDisplay);
 
 
 }
 
 
 ///////////////////////////////////End Get Artist/////////////////////////////////////
-
-
 
 /////////////////////////////////////Get Albums/////////////////////////////////////
 
@@ -214,10 +214,9 @@ function showTrackList(tracksDetailArray) {
                     <td>${item.duration_track} min</td>
                     <td>${item.order_title_track}</td>
                     <td>${item.author_track}</td>
-
-                    <td><button class="btn btn-success btn-light"> 
-                       Details
-                    </button> </td>  
+                    <td>
+                        <button class="btn btn-success btn-light">Lyrics</button>
+                    </td>  
                    
                   </tr>`;
     }
@@ -226,6 +225,7 @@ function showTrackList(tracksDetailArray) {
     console.log(item.name_track)
     console.log(index)
     $("#trackSearchOutput").html(html2);
+   
 
 }
 function showTracksDetails(data) {
@@ -344,6 +344,14 @@ $(document).ready(function () {
         const index = $(this).index()
         showTracksDetails(albumDetailArray[index]);
         console.log(index)
+        $(document).ready(function(){
+            (function(){
+                
+                
+                    this.$("#albumSearchOutput").addClass("bg-light")
+                })
+            
+        });
 
 
         console.log(albumDetailArray[index])

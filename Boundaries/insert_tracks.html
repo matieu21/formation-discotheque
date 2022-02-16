@@ -54,6 +54,9 @@
                             <li><a class="dropdown-item text-light " href="insert_tracks.html">New Track</a></li>
                         </ul>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="authentification.html"><img src="../images/logout24.png" ></a>
+                    </li>
                 </ul>
                 
             </div>
@@ -76,7 +79,7 @@
 
                var resultText = ""
 
-class InputForm_3 extends React.Component {
+class Track extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -165,10 +168,10 @@ class InputForm_3 extends React.Component {
                 // Tableau ordinal contenant 0 ou 1 objet JSON
                 console.log(result)
                 if (result == 1) {
-                    resultText = "Track added to album !"
+                    resultText = "Track added to the album"
 
                 } else {
-                    resultText = "This track already exists !"
+                    resultText = "Track already exists"
                    
                 }
                 console.log("resultText")
@@ -218,7 +221,7 @@ class InputForm_3 extends React.Component {
                         <label for="nom" className="etiquette col-sm col-form-label col-form-label-sm text-light">Title Track: </label>
 
                         <div className="col-sm-10 text-light">
-                            <input type="text" name="name_track" className="form-control " id="nom" value={this.state.name_track} onChange={this.handleChangeTextInput_3} 
+                            <input type="text" name="name_track" placeholder="Track Name *" className="form-control " id="nom" value={this.state.name_track} onChange={this.handleChangeTextInput_3} 
                                 required />
                         </div>
 
@@ -314,7 +317,7 @@ class InputForm_3 extends React.Component {
 
 // MAIN
 
-ReactDOM.render(<InputForm_3 />, document.getElementById("app_3"))
+ReactDOM.render(<Track />, document.getElementById("app_3"))
 //////////////Fin input tracks///////////////////////////
 
 

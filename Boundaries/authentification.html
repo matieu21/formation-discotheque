@@ -17,17 +17,17 @@ Authentification.html
 </head>
 
 <body>
-    <header id='header'>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+   
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <a class="navbar-brand" href="authentification.html">Home</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-
+            <a class="navbar-brand" href="contact.html">Contact Us</a>
+        
         </nav>
-    </header>
+
+    
+
+   
+        
     <div id="app" class="col-md-4 m-auto mt-6"></div>
 
 
@@ -121,23 +121,23 @@ Authentification.html
                 return (
 
                     <div id="centre" className="article">
-                        <legend className="legend text-light">Authentification</legend>
+                        <legend className="legend text-light">Log In</legend>
                         <form onSubmit={this.handleSubmit} method="POST">                                   
                             <div>
-                                <label for="pseudo" className="text-light">Pseudo: </label>
+                                <label for="pseudo" className="text-light">Pseudo: *</label>
                                 <div>
                                     <input type="text" name="pseudo_user" id="pseudo" value={this.state.pseudo_user} onChange={this.handleChangeTextInput} className="form-control"
-                                        placeholder="Votre pseudo *" required />
+                                         required />
                                 </div>
                                 <label id="lblMessagePseudo"></label>
                             </div>
 
 
                             <div>
-                                <label for="mdp" className="text-light">Mot de passe: </label>
+                                <label for="mdp" className="text-light">Mot de passe: *</label>
                                 <div>
                                     <input type="password" name="password_user" id="mdp" value={this.state.password_user} onChange={this.handleChangeTextInput} className="form-control"
-                                        placeholder="Votre mot de passe *" />
+                                        />
 
                                 </div>
                                 <label id="lblMessageMDP"></label>
@@ -148,12 +148,15 @@ Authentification.html
                             <p>
                                 <input id="btValider" className="btn btn-success btn-light" type="submit" value="Envoyer" />
                             </p>
+                            <div>
+                                <p className="text-light">Required fields are marked *</p>
+                            </div>
                             
                         </form>
 
                         <br /><br />
 
-                        <p className="text-light">Déjà inscrit? Connectez-vous <a href='authentification.html' className="text-light">ici</a> </p>
+                        <p className="text-light">You have an account? click <a href='inscription2.html' className="text-light">here</a> </p>
                         <p>
                             {this.state.message}
                         </p>
