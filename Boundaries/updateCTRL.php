@@ -343,7 +343,7 @@ $connexion = null;
 
         <!-- input caché qui nous permet de récuperer l'id_artist de la selection
             pour valider les modifications (j'imagine) -->
-        <input type='hidden' value=<?php echo $modifArtist ?> name='artistHidden'>
+        <input type='hidden' value='<?php echo $modifArtist ?>' name='artistHidden'>
 
 
         <input type="submit" class="btn btn-success btn-light" name="btModif" value="modifier">
@@ -391,15 +391,16 @@ $connexion = null;
         <input value='<?php echo $photoAlbum ?>' name='photoAlbum' type='text' class="form-control  bg-dark mb-1 text-light">
         
         <label class="text-light">Duration Album</label>
-        <input value='<?php echo $durationAlbum ?> min' name='durationAlbum' type='text' class="form-control  bg-dark mb-1 text-light">
+        <input value='<?php echo $durationAlbum ?>' name='durationAlbum' type='text' class="form-control  bg-dark mb-1 text-light">
         <label class="text-light">Total Tracks Album</label>
         <input value='<?php echo $totalTracksAlbum ?>' name='totalTracksAlbum' type='text' class="form-control  bg-dark mb-1 text-light">
         <label class="text-light">Year Release Album</label>
         <input value='<?php echo $yearReleaseAlbum ?>' name='yearReleaseAlbum' type='text' class="form-control  bg-dark mb-1 text-light">
+        
 
         <!-- input caché qui nous permet de récuperer l'id_artist de la selection
             pour valider les modifications (j'imagine) -->
-        <input type='hidden' value=<?php echo $modifAlbum ?> name='artistHidden'>
+        <input type='hidden' value=<?php echo $modifAlbum ?> name='albumHidden'>
 
 
         <input type="submit" class="btn btn-success btn-light" name="btModif2" value="modifier">

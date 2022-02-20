@@ -57,11 +57,11 @@ async function getArtist() {
     console.log(data)
 
     artistListArray = data
-
+console.log(artistListArray)
     for (index in artistListArray) {
 
         let artistIndex = artistListArray[index].name_artist
-
+console.log(artistListArray[index])
         artistListArrayId.push(artistIndex)
 
         console.log(artistIndex)
@@ -72,7 +72,7 @@ async function getArtist() {
     console.log(artistListArray)
 
     albumSearch(artistListArray)
-    console.log(data)
+    console.log(data[0])
 
     
 
@@ -91,7 +91,7 @@ function albumSearch(artistListArray) {
 
         albumDisplay += `<tr class="row"> 
                             <td class=" d-flex justify-content-between">
-                                <img src="${item.photo_artist}" width="100px" style= "border-radius:10px">
+                                <img src="${item.photo_artist}" width="100px"  style= "border-radius:10px">
                                     <span class="fs-3 text-light">${item.name_artist}</span><a href="http://${item.site_web_artist}" target=_blank class="text-light">${item.site_web_artist}</a>
                                 <button class="btn btn-success btn-light">
                                     Details
@@ -140,7 +140,7 @@ function showAlbums() {
 
     albumURL = (URLAlbum + artistListArray[index].id_artist)
     console.log(albumURL)
-
+    console.log(artistListArray[index])
     albumInfo(albumURL)
 
 
@@ -281,6 +281,7 @@ function showLyricsList(tracksLyricsArray) {
     for (item of tracksLyricsArray) {
 
         html += `<tr><th class="text-light">Lyrics of ${item.name_track}</th></tr><tr><td>${item.lyrics_track}</td></tr>`;
+        console.log(tracksLyricsArray)
     }
 
     console.log(html);
@@ -370,7 +371,7 @@ $(document).ready(function () {
 
 
         console.log(index - 1)
-        console.log(tracksDetailArray[index - 1])
+        console.log(tracksDetailArray[index - 1].name_track)
 
     });
 

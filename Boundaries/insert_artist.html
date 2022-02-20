@@ -102,7 +102,10 @@
                 console.clear()
                 const name = event.target.name
                 const value = event.target.value
-
+                console.log("name")
+                console.log(name)
+                console.log('value')
+                console.log(value)
                 this.setState({
                     [name]: value /// Pour faire du générique
                     //cp: value
@@ -112,7 +115,7 @@
 
 
             /*
-            SUBMIT EN MODE GET
+            SUBMIT EN MODE POST
             */
             handleSubmit(event) {
                 event.preventDefault()
@@ -157,7 +160,7 @@
 
                     <div id="centre" classname="article">
                         <legend className="legend text-light">New Artist</legend>
-                        <form onSubmit={this.handleSubmit} method="GET">
+                        <form onSubmit={this.handleSubmit} method="POST">
 
                             <div>
                                 <label for="nom" className="etiquette col-sm col-form-label col-form-label-sm text-light">Name: </label>
