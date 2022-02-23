@@ -56,24 +56,26 @@ async function getArtist() {
     const data = await response.json();
     console.log(data)
 
-    artistListArray = data
-console.log(artistListArray)
+    artistListArray = data[0]
+
     for (index in artistListArray) {
 
         let artistIndex = artistListArray[index].name_artist
-console.log(artistListArray[index])
+        let pm = artistListArray[index].id_artist
+
         artistListArrayId.push(artistIndex)
 
         console.log(artistIndex)
+        console.log(pm)
 
     }
 
 
-    console.log(artistListArray)
+    //console.log(artistListArray)
 
     albumSearch(artistListArray)
-    console.log(data[0])
-
+    
+console.log(art)
     
 
 }
@@ -100,7 +102,7 @@ function albumSearch(artistListArray) {
                             </td>
                         </tr>`
 
-    console.log(albumDisplay)
+   // console.log(albumDisplay)
 
 
 
@@ -136,13 +138,13 @@ async function albumInfo(albumURL) {
 }
 
 
-function showAlbums() {
+function showAlbums(index) {
 
     albumURL = (URLAlbum + artistListArray[index].id_artist)
     console.log(albumURL)
-    console.log(artistListArray[index])
+    console.log(artistListArray[index].id_artist)
     albumInfo(albumURL)
-
+    
 
 
 }
@@ -168,7 +170,7 @@ function showAlbumList(albumDetailArray) {
 
     }
 
-    console.log(html);
+   
 
 
     $("#albumSearchOutput").html(html);
@@ -188,7 +190,7 @@ async function trackInfo(trackURL) {
         throw "Erreur du serveur";
     }
     const dataInArray = await responseTrack.json();
-    console.log(dataInArray)
+    
 
     tracksDetailArray = dataInArray
 
@@ -205,7 +207,7 @@ async function trackInfo(trackURL) {
 
 function showTrackList(tracksDetailArray) {
     let html2 = "<tr><th>Name</th><th>Duration</th><th>Order Track</th><th>Author</th><th>Lyrics</th></tr>";
-    console.log(tracksDetailArray)
+   
 
     for (item of tracksDetailArray) {
 
@@ -270,6 +272,7 @@ function showTracksLyrics(item) {
     console.log(lyricsURL)
     //console.log(data.id_track)
     trackLyric(lyricsURL)
+    
 }
 
 
@@ -285,8 +288,9 @@ function showLyricsList(tracksLyricsArray) {
     }
 
     console.log(html);
+    console.log(item.name_track)
     console.log(item.lyrics_track)
-
+    
     $("#lyricsSearchOutput").html(html);
 
 }
@@ -326,10 +330,10 @@ $(document).ready(function () {
     $("#artistTable").delegate("tr", "click", function () {
         
        
-            const index = $(this).index();
-            showAlbums(artistListArrayId[index]);
+        const index = $(this).index()
+            showAlbums(index);
+           console.log(index)
            
-            console.log(index)
         
         
         
